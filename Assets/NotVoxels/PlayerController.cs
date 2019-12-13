@@ -1,18 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public ConstructGrid grid;
+    Camera thisCamera;
+    
+    void Awake()
     {
-        
+        thisCamera = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = thisCamera.ScreenPointToRay(Input.mousePosition);
         
+            if (Physics.Raycast(ray, out hit))
+            {
+                Vector3 test = grid.GetTilePosAt(hit.point);
+                Debug.DrawRay(test, Vector3.up, Color.green, 10);
+            }
+        }
     }
 }
